@@ -1,0 +1,6 @@
+{
+  "name": "NoirBook · Mae Noir Nails",
+  "description": "Bespoke natural-language guest booking engine and solo artisan cockpit for Mae Noir Nails, Ilorin, Nigeria.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
