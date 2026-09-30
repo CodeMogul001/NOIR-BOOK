@@ -9,6 +9,61 @@
     <meta property="og:description" content="Bespoke natural-language guest booking engine and solo artisan cockpit for Mae Noir Nails, Ilorin, Nigeria." />
     <meta property="og:type" content="website" />
     <meta name="twitter:card" content="summary_large_image" />
+    <script>
+      (function() {
+        // Defensive patch for browser extensions (such as Zerion wallet) attempting to redefine non-configurable properties
+        try {
+          const originalDefineProperty = Object.defineProperty;
+          Object.defineProperty = function(obj, prop, descriptor) {
+            try {
+              if (descriptor && typeof descriptor === 'object' && descriptor.configurable === undefined) {
+                descriptor.configurable = true;
+              }
+              return originalDefineProperty.call(Object, obj, prop, descriptor);
+            } catch (err) {
+              if (
+                prop === 'isZerion' ||
+                prop === 'ethereum' ||
+                (err && typeof err.message === 'string' && (err.message.includes('isZerion') || err.message.includes('Cannot redefine property')))
+              ) {
+                try {
+                  if (obj && descriptor && 'value' in descriptor) {
+                    obj[prop] = descriptor.value;
+                  }
+                } catch (_) {}
+                return obj;
+              }
+              throw err;
+            }
+          };
+        } catch (_) {}
+
+        window.addEventListener('error', function(event) {
+          if (
+            event &&
+            event.message &&
+            (event.message.includes('isZerion') || event.message.includes('Cannot redefine property'))
+          ) {
+            event.preventDefault();
+            event.stopImmediatePropagation();
+            return true;
+          }
+        }, true);
+
+        window.addEventListener('unhandledrejection', function(event) {
+          if (
+            event &&
+            event.reason &&
+            event.reason.message &&
+            (event.reason.message.includes('isZerion') || event.reason.message.includes('Cannot redefine property'))
+          ) {
+            event.preventDefault();
+            event.stopImmediatePropagation();
+            return true;
+          }
+        }, true);
+      })();
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
